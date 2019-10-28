@@ -1,0 +1,76 @@
+{
+  "name": "greyz-app",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "client-install": "npm install --prefix client",
+    "start": " node app.js ",
+    "client": "npm run start --prefix client",
+    "server": "node app.js",
+    "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false cd client && npm install && npm run build"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "keywords": [],
+  "author": "Nodeberry",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^3.1.0",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.17.1",
+    "compression": "^1.7.4",
+    "concurrently": "^5.0.0",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.3",
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "express": "^4.15.2",
+    "express-handlebars": "^3.1.0",
+    "express-messages": "^1.0.1",
+    "express-react-views": "^0.11.0",
+    "express-session": "^1.17.0",
+    "fs": "0.0.1-security",
+    "fs-extra": "^8.1.0",
+    "helmet": "^3.21.1",
+    "heroku-ssl-redirect": "0.0.4",
+    "hsts": "^2.2.0",
+    "joi": "^14.3.1",
+    "jsx": "^0.9.89",
+    "mongodb": "^3.3.3",
+    "mongoose": "^5.7.5",
+    "morgan": "^1.8.1",
+    "multer": "^1.4.2",
+    "nocache": "^2.1.0",
+    "nodemailer": "^6.3.1",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "password-reset": "^0.1.4",
+    "randomstring": "^1.1.5",
+    "react": "^16.10.2",
+    "react-detect-offline": "^2.4.0",
+    "react-dom": "^16.10.2",
+    "react-router-private": "^1.0.16",
+    "snyk": "^1.236.1",
+    "stellar-sdk": "^3.1.1",
+    "video-react": "^0.14.1",
+    "webpack-split-chunks": "^0.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.4"
+  },
+  "description": ""
+}

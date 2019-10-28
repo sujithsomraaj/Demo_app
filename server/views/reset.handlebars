@@ -1,0 +1,13 @@
+<form class="form-signin" action="/users/reset/{{token}}" method="POST">
+  <h2 class="form-signin-heading">Password Reset</h2>
+
+  <label for="inputEmail" class="sr-only">New Password</label>
+  <input type="text" id="inputEmail" name="new" class="form-control" placeholder="New Password" required autofocus>
+
+  <label for="inputPassword" class="sr-only">Confirm Password</label>
+  <input type="password" id="inputPassword" name="confirm" class="form-control" placeholder="Confirm Password" required>
+
+  <br/>
+  
+  <button class="btn btn-lg btn-default btn-block" type="submit">Change</button>
+</form>

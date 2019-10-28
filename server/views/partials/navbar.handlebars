@@ -1,0 +1,16 @@
+<div class="masthead">
+  <center><h3 class="text-muted">Welcome to Greyz</h3></center>
+  <nav>
+    <ul class="nav nav-justified">
+      {{#if isAuthenticated}}
+       
+        <li><a href="/users/dashboard">Dashboard</a></li>
+        <li><a href="/users/logout">Logout</a></li>
+      {{else}}
+       
+        <li><a href="/users/register">Sign Up</a></li>
+        <li><a href="/users/login">Sign In</a></li>
+      {{/if}}
+    </ul>
+  </nav>
+</div>
