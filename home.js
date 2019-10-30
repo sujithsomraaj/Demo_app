@@ -7,33 +7,71 @@
  */
 
 import React,{ Component } from 'react';
-import {
-  View,
-  Text,
-  Alert,
-  TouchableOpacity
-} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 
 class Home extends Component{
 
-  render(){
-    const goToRegister = () => {
+	render() {
+	const { container, title, subtitle, button, buttonText, footer } = styles
+	const goToRegister = () => {
         Actions.register()
-     }
-     const goToLogin = () => {
-        Actions.login()
-     }
-        return(
-          <View style={{flex:1,marginTop:250,paddingLeft:30,paddingRight:30}}>
-          <Text style={{ fontFamily:'arial', fontSize:20, fontWeight:'bold', textAlign:'center',color:'#2e4394' }}>Nodeberry Incorporation</Text>
-          <Text style={{ fontFamily:'arial',marginTop:15, fontSize:15, fontWeight:'100', textAlign:'center' }}>Laundromat Demo</Text>
-          <TouchableOpacity style={{marginTop:20,backgroundColor:'#2e4394',padding:12,borderRadius:3}} onPress={goToRegister}><Text style={{textAlign:'center',color:'white'}}>Register</Text></TouchableOpacity>
-          <TouchableOpacity style={{marginTop:20,backgroundColor:'#2e4394',padding:12,borderRadius:3}} onPress={goToLogin}><Text style={{textAlign:'center',color:'white'}}>Login</Text></TouchableOpacity>
-          <Text style={{textAlign:'center',marginTop:280}}>Powered by Nodebery Inc.,</Text>
-          </View>   
-          );
     }
+    const goToLogin = () => {
+        Actions.login()
+    }
+	
+	return (
+        <View style={container}>
+			<Text style={title}>Nodeberry Incorporation</Text>
+			<Text style={subtitle}>Laundromat Demo</Text>
+			<TouchableOpacity style={button} onPress={goToRegister}>
+				<Text style={buttonText}>Register</Text>
+			</TouchableOpacity>
+			<TouchableOpacity style={button} onPress={goToLogin}>
+				<Text style={buttonText}>Login</Text>
+			</TouchableOpacity>
+			<Text style={footer}>Powered by Nodebery Inc.,</Text>
+        </View>   
+        );
+	}
 }
+
+const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+		marginTop: 250,
+		paddingHorizontal: 30
+	},
+	title: {
+		color: '#2e4394',
+		fontFamily: 'arial',
+		fontSize: 20,
+		fontWeight: 'bold',
+		textAlign: 'center'
+	},
+	subtitle: {
+		fontFamily: 'arial',
+		marginVertical: 15,
+		fontSize: 15,
+		fontWeight: '100',
+		textAlign: 'center'
+	},
+	button: {
+		marginVertical: 10,
+		backgroundColor: '#2e4394',
+		padding: 12,
+		borderRadius: 25
+	},
+	buttonText: {
+		textAlign: 'center',
+		color: 'white'
+	},
+	footer: {
+		textAlign: 'center',
+		alignItems: 'flex-end',
+		marginTop: 300
+	}
+})
 
 export default Home;
