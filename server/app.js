@@ -19,16 +19,14 @@ var compression = require('compression');
 const nocache = require('nocache');
 
 
-const PORT = process.env.PORT || 5000;
-//const PORT =  5000;
+//const PORT = process.env.PORT || 5000;
+const PORT =  5000;
 require('./config/passport');
 //var mongodb = require('mongodb');
 
 mongoose.Promise = global.Promise;
- mongoose.connect('mongodb+srv://ASP:mongodb123@cluster0-9mo2r.mongodb.net/test?retryWrites=true&w=majority',{ useNewUrlParser: true });
-
-
-
+ mongoose.connect('mongodb://localhost/nodeberry');
+ 
 const app = express();
 app.use(sslRedirect());
 app.use(compression());
@@ -50,6 +48,8 @@ app.set('view engine', 'handlebars');
 app.use('./routes/uploads',express.static('uploads'));
 app.use(express.static('./public'));
 app.use(bodyParser.json());
+
+
 if(process.env.NODE_ENV=== 'production'){
   app.use(express.static('client/build'));
   app.use('./routes/uploads',express.static('uploads'));
@@ -85,4 +85,4 @@ app.use(flash());
 app.use('/users', require('./routes/users'));
 
 
-app.listen(PORT, () => console.log('Server started listening on port 5000!'));
+app.listen(PORT, () => console.log(`Server started listening on port ${PORT}`));
