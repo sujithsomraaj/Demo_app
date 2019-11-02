@@ -7,13 +7,40 @@
  */
 
 import React,{ Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import { Actions } from 'react-native-router-flux';
 
 class Home extends Component{
 
+	constructor() {
+		super()
+		this.state = {
+			loading: false
+		}
+	}
+
+	componentDidMount() {
+		this.getLoginInfo()
+	}
+	
+	getLoginInfo = async() => {
+		try {
+			const isLogged = await AsyncStorage.getItem('loggedIn')
+			console.log(isLogged)
+			if(isLogged === 'true') {
+				console.log('Logged in')
+				this.setState({ loading: true }, () => {
+					setTimeout(() => {Actions.replace('dashboard')}, 500)
+				})
+			}
+		} catch (error) {
+			console.log(error)
+		}
+	}
+
 	render() {
-	const { container, title, subtitle, button, buttonText, footer } = styles
+	const { loader, container, title, subtitle, button, buttonText, footer } = styles
 	const goToRegister = () => {
         Actions.register()
     }
@@ -22,6 +49,11 @@ class Home extends Component{
     }
 	
 	return (
+		this.state.loading ? 
+		<View style = {loader}>
+			<ActivityIndicator size="large" color="#007acc"/> 
+		</View>
+		:
         <View style={container}>
 			<Text style={title}>Nodeberry Incorporation</Text>
 			<Text style={subtitle}>Laundromat Demo</Text>
@@ -33,11 +65,17 @@ class Home extends Component{
 			</TouchableOpacity>
 			<Text style={footer}>Powered by Nodebery Inc.,</Text>
         </View>   
-        );
+    );
 	}
 }
 
 const styles = StyleSheet.create({
+	loader: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
+		transform: [{ scale: 1.5 }]
+	},
 	container: {
 		flex: 1,
 		marginTop: 250,

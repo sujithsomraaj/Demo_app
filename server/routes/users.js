@@ -106,7 +106,6 @@ router.route('/register')
   })
   .post(async (req, res, next) => {
     try {
-      console.log("HI");
       const result = Joi.validate(req.body, userSchema);
       if (result.error) {
         console.log(result.error.message);
