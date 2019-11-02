@@ -19,8 +19,7 @@ var compression = require('compression');
 const nocache = require('nocache');
 
 
-//const PORT = process.env.PORT || 5000;
-const PORT =  5000;
+const PORT = process.env.PORT || 5000;
 require('./config/passport');
 //var mongodb = require('mongodb');
 

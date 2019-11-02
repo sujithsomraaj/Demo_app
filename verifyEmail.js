@@ -37,11 +37,12 @@ export default class verifyEmail extends Component {
     }
 
     render() {
+		const { container, title, subtitle, inputBox } = styles
         return (
-            <View>
-                <Text>Verify your identity</Text>
-                <Text>Enter the key received in your mail to continue</Text>
-                <TextInput placeholder = "Your key here" onChangeText = {text => this.handleKey(text)} value = {this.state.key} />
+            <View style = {container}>
+                <Text style = {title}>Verify your identity</Text>
+                <Text style = {subtitle}>Enter the key received in your mail to continue</Text>
+                <TextInput style = {inputBox} placeholder = "Your key here" onChangeText = {text => this.handleKey(text)} value = {this.state.key} />
                 <TouchableOpacity onPress = {this.handleSubmit}>
 					<Text style={{textAlign:'center'}}>Login</Text>
 				</TouchableOpacity>
@@ -51,7 +52,39 @@ export default class verifyEmail extends Component {
 
 }
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+		alignItems: 'center',
+		justifyContent: 'center'
+	},
+	title: {
+		color: '#0eab4d',
+		textAlign: 'center',
+		fontSize: 20,
+		fontWeight: 'bold',
+		marginVertical: 10
+	},
+	subtitle: {
+		fontSize: 15,
+		marginVertical: 10
+	},
+	inputBox: {
+		height: 40,
+		width: 350,
+		borderColor: '#000',
+		borderWidth: 1,
+		borderRadius: 20,
+		textAlign: 'center',
+		marginTop: 15
+	},
+	button: {
+		marginTop: 20,
+		backgroundColor: '#2e4394',
+		padding: 12,
+		borderRadius: 25
+	}
+})
 
 
 
