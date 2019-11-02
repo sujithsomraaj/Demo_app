@@ -40,7 +40,7 @@ class Register extends Component{
   
 	handleSubmit = () => {
 		this.setState({ loading: true }, () => {
-			fetch('http://salty-temple-12472.herokuapp.com/users/register', {
+			fetch('https://salty-temple-12472.herokuapp.com/users/register', {
 			method: 'POST',
 			headers: {
 			  'Accept': 'application/json,text/plain, */*',
@@ -99,7 +99,7 @@ class Register extends Component{
 					<TextInput name="password" style={inputBox} placeholder="Enter your Password" value={this.state.value} onChangeText={text=>this.handlePassword(text)}/>
 					<TextInput name="confirmPassword" style={inputBox} placeholder="Enter Confirmation Password" value={this.state.value} onChangeText={text=>this.handleConfirmPassword(text)}/>
 					<TouchableOpacity style={button} onPress={this.handleSubmit}><Text style={{textAlign:'center',color:'white'}}>Register</Text></TouchableOpacity>
-					<Text style={footerText}>Powered by Nodebery Inc.,</Text>
+					<Text style={footerText}>Powered by Nodeberry Inc.,</Text>
 					</View>
 			)}
 			</KeyboardView>   
