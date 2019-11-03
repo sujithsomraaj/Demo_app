@@ -14,14 +14,9 @@ export default class Dashboard extends Component {
             amount: '',
             loading: false,
             buttonState: false,
-            transferring: false,
-            balance: 1000.00
+            transferring: false
         }
-    }
-    
-    componentDidMount() {
-        //Fetch wallet balance details here and store in the 'balance' state variable
-    }
+	}
 	
 	UNSAFE_componentWillMount() {
 		BackHandler.addEventListener('hardwareBackPress', this.handleBackButton)
@@ -66,15 +61,9 @@ export default class Dashboard extends Component {
                         buttonState: false 
                     })
                     Actions.success()
-                    this.updateBalance()
                 }, 2000)
             })
         }
-    }
-
-    updateBalance = () => {
-        const updateBalance = this.state.balance - this.state.amount
-        this.setState({ balance: updateBalance })
     }
 
     removeLoginInfo = async() => {
@@ -108,8 +97,8 @@ export default class Dashboard extends Component {
     }   
 
     render() {
-        const { loader, navbar, titleView, title, buttonView, button, buttonText, container, card, inputBox, cardTtitle, formLabel1, formLabel2,transferButton, transferIndicator } = styles
-        const { loading: isLoading, balance } = this.state
+        const { loader, navbar, titleView, title, buttonView, button, buttonText, container, card, inputBox, cardTitle, formLabel1, formLabel2,transferButton, transferIndicator } = styles
+        const { loading: isLoading } = this.state
         return (
             isLoading ?
             
@@ -136,7 +125,7 @@ export default class Dashboard extends Component {
                         cardMaxElevation={7}
                         cornerRadius={5}>
                         <View style = {card}>
-                            <Text style = {cardTtitle}>| Account</Text>
+                            <Text style = {cardTitle}>| Account</Text>
                             <Text style = {formLabel1}>To:</Text>
                             <TextInput style = {inputBox} value = {this.state.recipient} placeholder = "Recipient's name" onChangeText = {text => this.handleToUser(text)}/>
                             <Text style = {formLabel2}>Amount:</Text>
@@ -160,7 +149,7 @@ export default class Dashboard extends Component {
                             </View>
                             <View>
                                 <Text style = {{ alignSelf: 'flex-end', marginLeft: 315, marginTop: 40, color:'grey', fontSize: 17 }}>Balance</Text>
-                                <Text style = {{ alignSelf: 'flex-end', marginBottom: 20, fontSize: 18 }}><Text style = {{color: 'grey'}}>₹ </Text>${balance}</Text>
+                                <Text style = {{ alignSelf: 'flex-end', marginBottom: 20, fontSize: 18 }}><Text style = {{color: 'grey'}}>₹ </Text>1000.00</Text>
                             </View>
                         </View>
                     </CardView>
@@ -204,10 +193,11 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 25,
         borderBottomLeftRadius: 25
 	},
-	cardTtitle: {
+	cardTitle: {
 		fontSize: 18,
 		fontWeight: 'bold',
-		color: '#e17c00'
+		color: '#e17c00',
+		marginBottom: 10
 	},
 	formLabel1: {
 		fontSize: 17,
