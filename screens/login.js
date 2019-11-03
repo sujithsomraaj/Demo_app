@@ -6,12 +6,13 @@
  * @flow
  */
 
-import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, TextInput, ActivityIndicator, StyleSheet } from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
-import KeyboardView from '../components/KeyboardView';
-import { Actions } from 'react-native-router-flux';
-class Login extends Component {
+import React, { Component } from 'react'
+import { View, Text, TouchableOpacity, TextInput, ActivityIndicator, StyleSheet } from 'react-native'
+import AsyncStorage from '@react-native-community/async-storage'
+import KeyboardView from '../components/KeyboardView'
+import { Actions } from 'react-native-router-flux'
+
+export default class Login extends Component {
 
 	constructor(props) {
 		super(props);
@@ -57,7 +58,7 @@ class Login extends Component {
 				console.log(responseJson)
 				this.storeLoginInfo()
 				this.setState({ loading: false })
-				responseJson.success === "true" ? Actions.replace('dashboard') : null ;	   
+				responseJson.success === "true" ? Actions.replace('dashboard') : null 
 			})
 			.catch((error) => {
 				this.setState({ loading: false })
@@ -92,7 +93,7 @@ class Login extends Component {
 					</View>
 				)}
 			</KeyboardView>   
-		);
+		)
 	}
 }
 
@@ -142,5 +143,3 @@ const styles = StyleSheet.create({
 		marginTop: 200
 	}
 })
-
-export default Login;

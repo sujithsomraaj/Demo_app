@@ -5,16 +5,16 @@
  * @format
  * @flow
  */
-import React,{ Component } from 'react';
-import { Router, Scene } from 'react-native-router-flux';
-import Register from './screens/register';
-import Login from './screens/login';
-import Home from './screens/home';
-import verifyEmail from './screens/verifyEmail';
-import Dashboard from './screens/dashboard';
-import SuccessScreen from './screens/successScreen';
+import React,{ Component } from 'react'
+import { Router, Scene } from 'react-native-router-flux'
+import Register from './screens/register'
+import Login from './screens/login'
+import Home from './screens/home'
+import verifyEmail from './screens/verifyEmail'
+import Dashboard from './screens/dashboard'
+import SuccessScreen from './screens/successScreen'
 
-class App extends Component{
+export default class App extends Component{
     render() {
         return (
         	<Router>
@@ -27,8 +27,6 @@ class App extends Component{
                     <Scene key = "success" component = {SuccessScreen} hideNavBar title = "SuccessScreen" initial = {false} />
                 </Scene>
        		</Router>
-        );
+        )
     }
 }
-
-export default App;

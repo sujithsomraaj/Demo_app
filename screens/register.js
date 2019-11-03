@@ -6,15 +6,13 @@
  * @flow
  */
 
-import React,{ Component } from 'react';
-import { View, Text, TouchableOpacity, TextInput, StyleSheet, ActivityIndicator, Alert } from 'react-native';
-import KeyboardView from '../components/KeyboardView';
-import { Actions } from 'react-native-router-flux';
+import React,{ Component } from 'react'
+import { View, Text, TouchableOpacity, TextInput, StyleSheet, ActivityIndicator, Alert } from 'react-native'
+import KeyboardView from '../components/KeyboardView'
+import { Actions } from 'react-native-router-flux'
 import Toast, {DURATION} from 'react-native-easy-toast'
 
-const axios = require('axios');
-
-class Register extends Component{
+export default class Register extends Component{
 	constructor(props){
     	super(props);
     	this.state={
@@ -27,15 +25,15 @@ class Register extends Component{
   	}
 
 	handleUsername = name => {
-      this.setState({email:name});
+      this.setState({email:name})
     }
 
 	handlePassword = password => {
-      this.setState({password: password});
+      this.setState({password: password})
     }
 
 	handleConfirmPassword = confirmPassword => {
-      this.setState({confirmPassword: confirmPassword});
+      this.setState({confirmPassword: confirmPassword})
     }
   
 	handleSubmit = () => {
@@ -54,24 +52,24 @@ class Register extends Component{
 				privateKey:'zz',
 				oss:'privae'
 			})
-		})
-		.then(response => response.json())
-		.then(responseJson => {
-			console.log(responseJson)
-			this.setState({ loading: false })
-			if(responseJson.success === "true") {
-				Actions.verifyEmail()
-			} else if(responseJson.success === "Email is already in use") {
-				this.setState({
-					email: '',
-					toastVisible: true
-				})
-			}
-		})
-		.catch((error) => {
-			this.setState({ loading: false })
-			console.error(error);
-		});
+			})
+			.then(response => response.json())
+			.then(responseJson => {
+				console.log(responseJson)
+				this.setState({ loading: false })
+				if(responseJson.success === "true") {
+					Actions.verifyEmail()
+				} else if(responseJson.success === "Email is already in use") {
+					this.setState({
+						email: '',
+						toastVisible: true
+					})
+				}
+			})
+			.catch((error) => {
+				this.setState({ loading: false })
+				console.error(error);
+			})
 		})	   
 	}
 	
@@ -88,24 +86,24 @@ class Register extends Component{
 			:
 			
 			<>
-			<KeyboardView>
-			{() => (
-				<View style={container}>
-				{ this.state.toastVisible ? this.refs.toast.show('Already registered! Please login to continue', 400, () => {Actions.pop()}) : null }
-					<Text style={title}>Nodeberry Incorporation</Text>
-					<Text style={subtitle}>Laundromat Demo</Text>
-					<Text style={{textAlign:'center'}}>{this.state.email}</Text>
-					<TextInput name="email" type="email" style={inputBox} placeholder="Enter your Email" value={this.state.value} onChangeText={text=>this.handleUsername(text)}/>
-					<TextInput name="password" style={inputBox} placeholder="Enter your Password" value={this.state.value} onChangeText={text=>this.handlePassword(text)}/>
-					<TextInput name="confirmPassword" style={inputBox} placeholder="Enter Confirmation Password" value={this.state.value} onChangeText={text=>this.handleConfirmPassword(text)}/>
-					<TouchableOpacity style={button} onPress={this.handleSubmit}><Text style={{textAlign:'center',color:'white'}}>Register</Text></TouchableOpacity>
-					<Text style={footerText}>Powered by Nodeberry Inc.,</Text>
-					</View>
-			)}
-			</KeyboardView>   
-			<Toast ref="toast" position='top' style = {{backgroundColor: '#ffb417', width: 300}} textStyle={{color: 'black'}}/>
+				<KeyboardView>
+					{() => (
+						<View style={container}>
+							{ this.state.toastVisible ? this.refs.toast.show('Already registered! Please login to continue', 400, () => {Actions.pop()}) : null }
+							<Text style={title}>Nodeberry Incorporation</Text>
+							<Text style={subtitle}>Laundromat Demo</Text>
+							<Text style={{textAlign:'center'}}>{this.state.email}</Text>
+							<TextInput name="email" type="email" style={inputBox} placeholder="Enter your Email" value={this.state.value} onChangeText={text=>this.handleUsername(text)}/>
+							<TextInput name="password" style={inputBox} placeholder="Enter your Password" value={this.state.value} onChangeText={text=>this.handlePassword(text)}/>
+							<TextInput name="confirmPassword" style={inputBox} placeholder="Enter Confirmation Password" value={this.state.value} onChangeText={text=>this.handleConfirmPassword(text)}/>
+							<TouchableOpacity style={button} onPress={this.handleSubmit}><Text style={{textAlign:'center',color:'white'}}>Register</Text></TouchableOpacity>
+							<Text style={footerText}>Powered by Nodeberry Inc.,</Text>
+						</View>
+					)}
+				</KeyboardView>   
+				<Toast ref="toast" position='top' style = {{backgroundColor: '#ffb417', width: 300}} textStyle={{color: 'black'}}/>
 			</>
-        );
+        )
     }
 }
 
@@ -156,4 +154,3 @@ const styles = StyleSheet.create({
 	}
 })
 
-export default Register;

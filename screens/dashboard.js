@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, TextInput, TouchableOpacity, ActivityIndicator, StyleSheet, Keyboard } from 'react-native'
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-community/async-storage'
 import CardView from 'react-native-cardview'
 import Spinner from 'react-native-spinkit'
 import { Actions } from 'react-native-router-flux'
@@ -31,9 +31,8 @@ export default class Dashboard extends Component {
             console.log('Enter all the fields')
         } else {
             Keyboard.dismiss()
-            console.log('Transferring...')
             this.setState({ transferring: true, buttonState: true }, () => {
-                setTimeout( () => {
+                setTimeout(() => {
                     this.setState({
                         recipient: '',
                         amount: '', 
@@ -41,14 +40,14 @@ export default class Dashboard extends Component {
                         buttonState: true 
                     })
                     Actions.success()
-                }, 2000 )
+                }, 2000)
             })
         }
     }
 
     removeLoginInfo = async() => {
         try {
-            await AsyncStorage.setItem('loggedIn','false')
+            await AsyncStorage.setItem('loggedIn', 'false')
         } catch (error) {
             console.log(error)
         }
@@ -61,20 +60,23 @@ export default class Dashboard extends Component {
             })
             .then(response => response.json())
             .then(responseJson => {
-                console.log(responseJson);
-                this.removeLoginInfo()
-                this.setState({ loading: false })
-                responseJson.success === true ? Actions.replace('home') : alert('Can\'t logout. Try again')
+				this.setState({ loading: false })
+				if(responseJson.success === true) {
+					this.removeLoginInfo()
+					Actions.replace('home')
+				} else {
+					alert('Can\'t logout. Try again')
+				}                
             })
             .catch(error => {
                 this.setState({ loading: false })
-                console.error(error);
+                console.error(error)
             });
         })
     }   
 
     render() {
-        const { loader, navbar, titleView, title, buttonView, button, buttonText, container, card, inputBox, transferButton } = styles
+        const { loader, navbar, titleView, title, buttonView, button, buttonText, container, card, inputBox, cardTtitle, formLabel1, formLabel2,transferButton, loader } = styles
         const { loading: isLoading } = this.state
         return (
             isLoading ?
@@ -102,23 +104,26 @@ export default class Dashboard extends Component {
                         cardMaxElevation={7}
                         cornerRadius={5}>
                         <View style = {card}>
-                            <Text style = {{ fontSize: 18, fontWeight: 'bold', color: '#e17c00' }}>| Account</Text>
-                            <Text style = {{ fontSize: 17, marginTop: 15 }}>To:</Text>
+                            <Text style = {cardTtitle}>| Account</Text>
+                            <Text style = {formLabel1}>To:</Text>
                             <TextInput style = {inputBox} value = {this.state.recipient} placeholder = "Recipient's name" onChangeText = {text => this.handleToUser(text)}/>
-                            <Text style = {{ fontSize: 17, marginTop: 25 }}>Amount:</Text>
+                            <Text style = {formLabel2}>Amount:</Text>
                             <TextInput style = {inputBox} keyboardType = 'numeric' value = {this.state.amount} placeholder = "Enter amount" onChangeText = {amount => this.handleAmount(amount)}/>
                         </View>
                         <View style = {{flexDirection: 'row'}}>
                             <View>
-                                <TouchableOpacity style = {transferButton} onPress = {this.handleTransaction} disabled = {this.state.buttonState}>
-                                { 
-                                    this.state.transferring ?
-                                    <View style = {{flex:1, alignItems: 'center', justifyContent: 'center'}} >
-                                        <Spinner isVisible={true} size={27} type='Wave' color='white'/>
-                                    </View> 
-                                    : 
-                                    <Text style = {buttonText}>Send</Text>
-                                }
+								<TouchableOpacity style = {transferButton} onPress = {this.handleTransaction} disabled = {this.state.buttonState}>
+									{ 
+										this.state.transferring ?
+										
+										<View style = {loader} >
+											<Spinner isVisible={true} size={27} type='Wave' color='white'/>
+										</View> 
+										
+										: 
+										
+										<Text style = {buttonText}>Send</Text>
+									}
                                 </TouchableOpacity>
                             </View>
                             <View>
@@ -127,8 +132,6 @@ export default class Dashboard extends Component {
                             </View>
                         </View>
                     </CardView>
-                </View>
-                <View style = {{ flex: 1, justifyContent: 'center', alignItems: 'center'}}>
                 </View>
             </>
         )
@@ -168,7 +171,20 @@ const styles = StyleSheet.create({
 		padding: 12,
         borderTopLeftRadius: 25,
         borderBottomLeftRadius: 25
-    },
+	},
+	cardTtitle: {
+		fontSize: 18,
+		fontWeight: 'bold',
+		color: '#e17c00'
+	},
+	formLabel1: {
+		fontSize: 17,
+		marginTop: 15
+	},
+	formLabel2: {
+		fontSize: 17,
+		marginTop: 15
+	},
     transferButton: {
         position: 'absolute',
         marginLeft: 25,
@@ -200,5 +216,10 @@ const styles = StyleSheet.create({
         borderRadius: 12,
         paddingLeft: 20,
 		marginTop: 15
+	},
+	loader: {
+		flex:1,
+		alignItems: 'center',
+		justifyContent: 'center'
 	}
 })

@@ -6,12 +6,12 @@
  * @flow
  */
 
-import React,{ Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
-import { Actions } from 'react-native-router-flux';
+import React,{ Component } from 'react'
+import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native'
+import AsyncStorage from '@react-native-community/async-storage'
+import { Actions } from 'react-native-router-flux'
 
-class Home extends Component{
+export default class Home extends Component{
 
 	constructor() {
 		super()
@@ -27,7 +27,6 @@ class Home extends Component{
 	getLoginInfo = async() => {
 		try {
 			const isLogged = await AsyncStorage.getItem('loggedIn')
-			console.log(isLogged)
 			if(isLogged === 'true') {
 				console.log('Logged in')
 				this.setState({ loading: true }, () => {
@@ -40,32 +39,28 @@ class Home extends Component{
 	}
 
 	render() {
-	const { loader, container, title, subtitle, button, buttonText, footer } = styles
-	const goToRegister = () => {
-        Actions.register()
-    }
-    const goToLogin = () => {
-        Actions.login()
-    }
-	
-	return (
-		this.state.loading ? 
-		<View style = {loader}>
-			<ActivityIndicator size="large" color="#007acc"/> 
-		</View>
-		:
-        <View style={container}>
-			<Text style={title}>Nodeberry Incorporation</Text>
-			<Text style={subtitle}>Laundromat Demo</Text>
-			<TouchableOpacity style={button} onPress={goToRegister}>
-				<Text style={buttonText}>Register</Text>
-			</TouchableOpacity>
-			<TouchableOpacity style={button} onPress={goToLogin}>
-				<Text style={buttonText}>Login</Text>
-			</TouchableOpacity>
-			<Text style={footer}>Powered by Nodebery Inc.,</Text>
-        </View>   
-    );
+		const { loader, container, title, subtitle, button, buttonText, footer } = styles		
+		return (
+			this.state.loading ? 
+
+			<View style = {loader}>
+				<ActivityIndicator size="large" color="#007acc"/> 
+			</View>
+			
+			:
+			
+			<View style={container}>
+				<Text style={title}>Nodeberry Incorporation</Text>
+				<Text style={subtitle}>Laundromat Demo</Text>
+				<TouchableOpacity style={button} onPress={() => Actions.register()}>
+					<Text style={buttonText}>Register</Text>
+				</TouchableOpacity>
+				<TouchableOpacity style={button} onPress={() => Actions.login()}>
+					<Text style={buttonText}>Login</Text>
+				</TouchableOpacity>
+				<Text style={footer}>Powered by Nodeberry Inc.,</Text>
+			</View>   
+		)
 	}
 }
 
@@ -111,5 +106,3 @@ const styles = StyleSheet.create({
 		marginTop: 300
 	}
 })
-
-export default Home;

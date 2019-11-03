@@ -6,17 +6,17 @@ const tick = require('../assets/Tick.png')
 
 export default class SuccessScreen extends Component {
     render() {
-        const { container, message, button } = styles
+        const { container, imageView, image, messageView, message, button, buttonText } = styles
         return (
             <View style = {container}>
-                <View style = {{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                    <Image source = {tick} style = {{ width: 150, height: 150, position: 'absolute', top: 140, left: -50}} />            
+                <View style = {imageView}>
+                    <Image source = {tick} style = {image} />            
                 </View>
-                <View style = {{ flex: 6, justifyContent: 'center'}}>
+                <View style = {messageView}>
                     <Text style = {message}>Transaction success!</Text> 
                 </View>
                 <TouchableOpacity style = {button} onPress = {() => Actions.pop()}>
-					<Text style = {{ textAlign: 'center', color: 'white' }}>Close</Text>
+					<Text style = {buttonText}>Close</Text>
 				</TouchableOpacity>
             </View>
         )
@@ -28,6 +28,22 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         backgroundColor: '#0000a0'
+    },
+    imageView: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    image: {
+        width: 150,
+        height: 150,
+        position: 'absolute',
+        top: 140,
+        left: -50
+    },
+    messageView: {
+        flex: 6,
+        justifyContent: 'center'
     },
     message: {
         position: 'relative',
@@ -46,5 +62,9 @@ const styles = StyleSheet.create({
         borderRadius: 25,
         borderColor: 'white',
         borderWidth: 1
-	}
+    },
+    buttonText: {
+        textAlign: 'center',
+        color: 'white'
+    }
 })

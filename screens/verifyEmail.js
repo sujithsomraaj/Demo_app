@@ -18,25 +18,25 @@ export default class verifyEmail extends Component {
 
     handleSubmit = () => {
 		this.setState({ loading: true }, () => {
-		fetch('http://salty-temple-12472.herokuapp.com/users/verify', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json,text/plain, */*',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-             	token: this.state.key.trim(),
-            })     
-		})
-		.then(response => response.json())
-		.then(responseJson => {
-			console.log(responseJson);
-			this.setState({ loading: false })
-			responseJson.success === "Success" ? Actions.home() : alert('Invalid token') ;
-		})
-		.catch(error => {
-			console.error(error);
-		});
+			fetch('http://salty-temple-12472.herokuapp.com/users/verify', {
+				method: 'POST',
+				headers: {
+					'Accept': 'application/json,text/plain, */*',
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					token: this.state.key.trim(),
+				})     
+			})
+			.then(response => response.json())
+			.then(responseJson => {
+				console.log(responseJson);
+				this.setState({ loading: false })
+				responseJson.success === "Success" ? Actions.home() : alert('Invalid token') 
+			})
+			.catch(error => {
+				console.error(error)
+			})
 		})        
     }
 
