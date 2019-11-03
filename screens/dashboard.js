@@ -14,9 +14,14 @@ export default class Dashboard extends Component {
             amount: '',
             loading: false,
             buttonState: false,
-            transferring: false
+            transferring: false,
+            balance: 1000.00
         }
-	}
+    }
+    
+    componentDidMount() {
+        //Fetch wallet balance details here and store in the 'balance' state variable
+    }
 	
 	UNSAFE_componentWillMount() {
 		BackHandler.addEventListener('hardwareBackPress', this.handleBackButton)
@@ -48,8 +53,8 @@ export default class Dashboard extends Component {
     }
 
     handleTransaction = () => {
-        if( !this.state.recipient || !this.state.amount ) {
-            console.log('Enter all the fields')
+        if( !this.state.recipient || !this.state.amount || this.state.amount > this.state.balance ) {
+            return
         } else {
             Keyboard.dismiss()
             this.setState({ transferring: true, buttonState: true }, () => {
@@ -61,9 +66,15 @@ export default class Dashboard extends Component {
                         buttonState: false 
                     })
                     Actions.success()
+                    this.updateBalance()
                 }, 2000)
             })
         }
+    }
+
+    updateBalance = () => {
+        const updateBalance = this.state.balance - this.state.amount
+        this.setState({ balance: updateBalance })
     }
 
     removeLoginInfo = async() => {
@@ -98,7 +109,7 @@ export default class Dashboard extends Component {
 
     render() {
         const { loader, navbar, titleView, title, buttonView, button, buttonText, container, card, inputBox, cardTtitle, formLabel1, formLabel2,transferButton, transferIndicator } = styles
-        const { loading: isLoading } = this.state
+        const { loading: isLoading, balance } = this.state
         return (
             isLoading ?
             
@@ -149,7 +160,7 @@ export default class Dashboard extends Component {
                             </View>
                             <View>
                                 <Text style = {{ alignSelf: 'flex-end', marginLeft: 315, marginTop: 40, color:'grey', fontSize: 17 }}>Balance</Text>
-                                <Text style = {{ alignSelf: 'flex-end', marginBottom: 20, fontSize: 18 }}><Text style = {{color: 'grey'}}>₹ </Text>1000.00</Text>
+                                <Text style = {{ alignSelf: 'flex-end', marginBottom: 20, fontSize: 18 }}><Text style = {{color: 'grey'}}>₹ </Text>${balance}</Text>
                             </View>
                         </View>
                     </CardView>
