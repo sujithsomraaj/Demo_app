@@ -28,13 +28,14 @@ export default class Dashboard extends Component {
 
 	handleBackButton = () => {
 		if (Actions.currentScene == 'dashboard') {
-			Alert.alert('Quit','Close the application?',[{
+			Alert.alert('Quit','Close the application?', 
+			[{
 				text: 'OK',
 				onPress: () =>	BackHandler.exitApp()
 			}], {
-				cancelable: false
+				cancelable: true
 			})
-			return true;
+			return true
 		}
 	};
 
@@ -57,7 +58,7 @@ export default class Dashboard extends Component {
                         recipient: '',
                         amount: '', 
                         transferring: false,
-                        buttonState: true 
+                        buttonState: false 
                     })
                     Actions.success()
                 }, 2000)
