@@ -80,7 +80,7 @@ export default class Register extends Component{
 			isLoading ? 
 			
 			<View style = {loader}>
-			<ActivityIndicator size="large" color="#007acc"/> 
+				<ActivityIndicator size="large" color="#007acc"/> 
 			</View>
 			
 			:

@@ -32,6 +32,7 @@
     "eslint": "6.5.1",
     "jest": "24.9.0",
     "metro-react-native-babel-preset": "0.51.1",
+    "react-codemod": "^5.1.0",
     "react-test-renderer": "16.9.0"
   },
   "jest": {

@@ -41,30 +41,34 @@ export default class Login extends Component {
 	}
 	
 	handleSubmit = () => {
-		this.setState({ loading: true }, () => {
-			fetch('http://salty-temple-12472.herokuapp.com/users/login', {
-				method: 'POST',
-				headers: {
-				'Accept': 'application/json, text/plain, */*',
-				'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({
-				email: this.state.username,	   
-				password: this.state.password
+		if( !this.state.username || !this.state.password ) {
+			return
+		} else {
+			this.setState({ loading: true }, () => {
+				fetch('http://salty-temple-12472.herokuapp.com/users/login', {
+					method: 'POST',
+					headers: {
+						'Accept': 'application/json, text/plain, */*',
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({
+						email: this.state.username,	   
+						password: this.state.password
+					})
+				 })
+				.then((response) => response.json())
+				.then((responseJson) => {
+					console.log(responseJson)
+					this.storeLoginInfo()
+					this.setState({ loading: false })
+					responseJson.success === "true" ? Actions.replace('dashboard') : null 
+				})
+				.catch((error) => {
+					this.setState({ loading: false })
+					console.error(error);
 				})
 			})
-			.then((response) => response.json())
-			.then((responseJson) => {
-				console.log(responseJson)
-				this.storeLoginInfo()
-				this.setState({ loading: false })
-				responseJson.success === "true" ? Actions.replace('dashboard') : null 
-			})
-			.catch((error) => {
-				this.setState({ loading: false })
-				console.error(error);
-			})
-		})   
+		}
 	}
 
 	render() {

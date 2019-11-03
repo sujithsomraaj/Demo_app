@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, TextInput, TouchableOpacity, ActivityIndicator, StyleSheet, Keyboard } from 'react-native'
+import { View, Text, TextInput, TouchableOpacity, ActivityIndicator, StyleSheet, Keyboard, BackHandler, Alert } from 'react-native'
 import AsyncStorage from '@react-native-community/async-storage'
 import CardView from 'react-native-cardview'
 import Spinner from 'react-native-spinkit'
@@ -16,7 +16,27 @@ export default class Dashboard extends Component {
             buttonState: false,
             transferring: false
         }
-    }
+	}
+	
+	UNSAFE_componentWillMount() {
+		BackHandler.addEventListener('hardwareBackPress', this.handleBackButton)
+	}
+
+	UNSAFE_componentWillUnMount() {
+		BackHandler.addEventListener('hardwareBackPress', this.handleBackButton)
+	}
+
+	handleBackButton = () => {
+		if (Actions.currentScene == 'dashboard') {
+			Alert.alert('Quit','Close the application?',[{
+				text: 'OK',
+				onPress: () =>	BackHandler.exitApp()
+			}], {
+				cancelable: false
+			})
+			return true;
+		}
+	};
 
     handleToUser = name => {
         this.setState({ recipient: name })
@@ -76,7 +96,7 @@ export default class Dashboard extends Component {
     }   
 
     render() {
-        const { loader, navbar, titleView, title, buttonView, button, buttonText, container, card, inputBox, cardTtitle, formLabel1, formLabel2,transferButton, loader } = styles
+        const { loader, navbar, titleView, title, buttonView, button, buttonText, container, card, inputBox, cardTtitle, formLabel1, formLabel2,transferButton, transferIndicator } = styles
         const { loading: isLoading } = this.state
         return (
             isLoading ?
@@ -116,7 +136,7 @@ export default class Dashboard extends Component {
 									{ 
 										this.state.transferring ?
 										
-										<View style = {loader} >
+										<View style = {transferIndicator} >
 											<Spinner isVisible={true} size={27} type='Wave' color='white'/>
 										</View> 
 										
@@ -217,7 +237,7 @@ const styles = StyleSheet.create({
         paddingLeft: 20,
 		marginTop: 15
 	},
-	loader: {
+	transferIndicator: {
 		flex:1,
 		alignItems: 'center',
 		justifyContent: 'center'
