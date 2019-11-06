@@ -1,6 +1,11 @@
 import React, { Component } from 'react'
-import { View, Alert, Text, TextInput, TouchableOpacity, ActivityIndicator, StyleSheet } from 'react-native'
+import { View, Alert, Text, TextInput, TouchableOpacity, ActivityIndicator, StyleSheet,Image } from 'react-native'
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen'
 import { Actions } from 'react-native-router-flux'
+import AsyncStorage from '@react-native-community/async-storage';
+
+const logo = require('../assets/verify.png');
+
 
 export default class verifyEmail extends Component {
 
@@ -10,38 +15,60 @@ export default class verifyEmail extends Component {
 			key: '',
 			loading: false
         }
-    }
+	}
+	
+	storeVerificationStatus = async() => {
+		try {
+			await AsyncStorage.setItem('active','true')
+		} catch (error) {
+			console.log(error)
+		}
+	}
 
     handleKey = key => {
         this.setState({key: key})
     }
 
     handleSubmit = () => {
+		if(!this.state.key){
+			alert('Enter key to verify');
+		}
+		else{
 		this.setState({ loading: true }, () => {
-			fetch('http://salty-temple-12472.herokuapp.com/users/verify', {
+			fetch('https://salty-temple-12472.herokuapp.com/users/verify', {
 				method: 'POST',
 				headers: {
 					'Accept': 'application/json,text/plain, */*',
 					'Content-Type': 'application/json',
 				},
 				body: JSON.stringify({
-					token: this.state.key.trim(),
+					token: this.state.key,
 				})     
 			})
 			.then(response => response.json())
 			.then(responseJson => {
 				console.log(responseJson);
 				this.setState({ loading: false })
-				responseJson.success === "Success" ? Actions.home() : alert('Invalid token') 
+				if(responseJson.success === "Success") {
+					this.storeVerificationStatus()
+					Alert.alert('Success', 'Registration successful', [{
+						text: 'OK',
+						onPress: () => Actions.home()
+					}])
+				} else if(responseJson.success === 'No user Found.') {
+					alert('Invalid token')
+				} else {
+					alert('Registration failed. Try again')
+				}
 			})
 			.catch(error => {
 				console.error(error)
 			})
 		})        
     }
-
+	}
     render() {
-		const { loader, container, title, subtitle, inputBox, button, buttonText } = styles
+		const { loader, container, title, subtitle, inputBox, button, buttonText, image } = styles
 		const { loading: isLoading } = this.state
         return (
 			isLoading ? 
@@ -53,9 +80,10 @@ export default class verifyEmail extends Component {
 			:
 			
 			<View style = {container}>
+				<Image source = {logo} style = {image} />            
                 <Text style = {title}>Verify your identity</Text>
                 <Text style = {subtitle}>Enter the key received in your mail to continue</Text>
-                <TextInput style = {inputBox} placeholder = "Your key here" onChangeText = {text => this.handleKey(text)} value = {this.state.key} />
+                <TextInput style = {inputBox} name="key" placeholder = "Your key here"  autoCapitalize = 'none'  onChangeText = {text => this.handleKey(text)} value = {this.state.value} />
                 <TouchableOpacity style = {button} onPress = {this.handleSubmit}>
 					<Text style = {buttonText}>Login</Text>
 				</TouchableOpacity>
@@ -75,39 +103,47 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		alignItems: 'center',
-		justifyContent: 'center'
+		justifyContent: 'center',
+		backgroundColor:'white',
+		paddingHorizontal: wp('10%')
 	},
 	title: {
 		color: '#0eab4d',
 		textAlign: 'center',
-		fontSize: 20,
+		fontSize: hp(3),
 		fontWeight: 'bold',
-		marginVertical: 10
+		marginVertical: hp(1.3)
 	},
 	subtitle: {
-		fontSize: 15,
-		marginVertical: 10
+		textAlign: 'center',
+		fontSize: hp(1.9),
+		marginVertical: hp(1.3)
 	},
 	inputBox: {
-		height: 40,
-		width: 350,
+		height: hp(5),
+		width: wp(80),
 		borderColor: '#000',
 		borderWidth: 1,
 		borderRadius: 20,
 		textAlign: 'center',
-		marginTop: 15
+		marginVertical: hp(2.5)
 	},
 	button: {
-		width: 100,
-		marginTop: 20,
+		width: wp(25),
 		backgroundColor: '#2e4394',
 		padding: 12,
 		borderRadius: 25
 	}, 
 	buttonText: {
 		textAlign: 'center',
-		color: 'white'
-	}
+		color: 'white',
+		fontSize: hp(2)
+	},
+	image: {
+		height: hp(14),
+		width: wp(26),
+		alignSelf: 'center'
+    }
 })
 
 

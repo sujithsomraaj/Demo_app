@@ -36,13 +36,13 @@ export default class KeyboardView extends Component {
       const fieldHeight = height;
       const fieldTop = pageY;
       const gap = (windowHeight - keyboardHeight) - (fieldTop + fieldHeight);
-      if (gap >= keyboardHeight && gap >=0) {
+      if (gap >= 0) {
         return;
       }
       Animated.timing(
         this.state.shift,
         {
-          toValue: gap-50,
+          toValue: gap,
           duration: 200,
           useNativeDriver: true,
         }
@@ -64,6 +64,7 @@ export default class KeyboardView extends Component {
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: 'white',
     height: '100%',
     left: 0,
     position: 'absolute',
